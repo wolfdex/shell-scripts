@@ -6,7 +6,6 @@ size=4096
 
 # [:print:] [:graph:] -> tr --help
 signs="[:print:]"
-echo "eins $1"
 
 # get timestamp as filename if not given
 if [ -z $1 ];  then

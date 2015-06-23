@@ -2,7 +2,9 @@
 # W.-Marcel Richter (wmrichter@gmail.com)
 
 ts=$(date +%s)
-to="-i 8"
+
+#inactivity timeout
+#to="-i 8"
 
 if [ -z $1 ];  then
   encname1="$HOME/.crypt${ts}"

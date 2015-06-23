@@ -3,6 +3,10 @@
 
 ts=$(date +%s)
 dbxpath="$HOME/cloud/Dropbox"
+
+#uid=$(id -u)
+#dbcpath="/run/user/$uid/"
+
 dbcpath="$HOME/crypt"
 
 if [ -z $1 ];  then

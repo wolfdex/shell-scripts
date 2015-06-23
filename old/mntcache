@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+include FileUtils
+
+strt = "/tmp/users/magic/.cache "
+strc = "~/Ncache "
+
+if ! Dir.exists?(strt)
+#  Dir.mkdir (strt)
+  strp = "mkdir -p " + strt
+  system strt
+end
+
+if ! Dir.exists?(strc)
+  # Dir.mkdir (strc)
+  strp = "mkdir -p " + strc
+  system strp
+end
+
+strp="ln -s " + strt + strc
+system strp
+
+
+

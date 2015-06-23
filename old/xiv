@@ -1,0 +1,4 @@
+#!/bin/sh
+xrandr -o inverted
+# NONE CW CCW HALF
+xsetwacom set "Serial Wacom Tablet eraser" rotate half

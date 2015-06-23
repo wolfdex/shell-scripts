@@ -1,0 +1,3 @@
+#!/bin/sh
+xrandr -o normal
+xsetwacom set "Serial Wacom Tablet eraser" rotate none

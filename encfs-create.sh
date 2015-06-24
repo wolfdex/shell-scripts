@@ -7,8 +7,8 @@ ts=$(date +%s)
 #to="-i 8"
 
 if [ -z $1 ];  then
-  encname1="$HOME/.crypt${ts}"
-  encname2="$HOME/crypt${ts}"
+  encname1="$(pwd)/.crypt${ts}"
+  encname2="$(pwd)/crypt${ts}"
 else
   encname1=$1
   encname2=$2 

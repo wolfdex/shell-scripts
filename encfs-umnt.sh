@@ -1,13 +1,14 @@
 #!/bin/bash
 # W.-Marcel Richter (wmrichter@gmail.com)
 
-echo $1
+ft=$(mount | grep  " $1 " |  awk '{print $1}')
 
-if [ -n $1 ];  then
-  fusermount -u $1
-  rm  -r $1
-else
-  echo "fehler"
-  
+
+if [ ! "$ft" = "encfs" ] ; then 
+ echo "encfs not found"
+ exit 0
 fi
+
+tres=$(fusermount -u $1 && rm  -r $1)
+
 

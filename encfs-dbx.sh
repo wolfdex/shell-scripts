@@ -15,6 +15,8 @@ fkthelp () {
   echo "encfs-dbx.sh CRYPTED_FOLDER KEYFILE -ck"
   echo ""  
   echo "encfs-dbx.sh -ck KEYFILE	create keyfile"	
+  echo ""  
+  echo "encfs-dbx.sh -u TARGET_NAME"	
   exit 1
 } 
 
@@ -24,6 +26,15 @@ if [ "$1" = "-h" ]; then
   fkthelp
   exit 1
 fi
+
+# test -ck > create keyfile
+if [ "$1" = "-u" ]; then   
+  dbcpath="$dbcpath/$2"
+  echo $dbcpath
+  encfs-umnt.sh $dbcpath
+  exit
+fi
+
 
 # test -ck > create keyfile
 if [ "$1" = "-ck" ]; then   

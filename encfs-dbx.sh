@@ -3,13 +3,36 @@
 
 ts=$(date +%s)
 dbxpath="$HOME/cloud/Dropbox"
-
-#uid=$(id -u)
-#dbcpath="/run/user/$uid/"
-
 dbcpath="$HOME/crypt"
 
-if [ -z $1 ];  then
+# help
+fkthelp () {
+  echo "encfs-dbx.sh - by W.-M. Richter"
+  echo ""
+  echo "encfs-dbx.sh -h		this help"
+  echo "encfs-dbx.sh CRYPTED_FOLDER"
+  echo "encfs-dbx.sh CRYPTED_FOLDER KEYFILE"
+  echo "encfs-dbx.sh CRYPTED_FOLDER KEYFILE -ck"
+  echo ""  
+  echo "encfs-dbx.sh -ck KEYFILE	create keyfile"	
+  exit 1
+} 
+
+
+# show help
+if [ "$1" = "-h" ]; then
+  fkthelp
+  exit 1
+fi
+
+# test -ck > create keyfile
+if [ "$1" = "-ck" ]; then   
+  encfs-create.sh $1 $2  
+  exit 1
+fi
+
+# run without arguments
+if [ -z $1 ]; then
   encname1="$dbxpath/.crypt${ts}"
   encname2="$dbcpath/crypt${ts}"
 else
@@ -17,16 +40,4 @@ else
   encname2="$dbcpath/$1"
 fi
 
-if [ -z $2 ];  then
-  keysafe="${ts}.key.gpg"
-else
-  keysafe=$2
-fi
-
-if [ !  -f $keysafe ]; then
-  echo "create keyfile"
-  tr -dc [:print:] </dev/urandom | head -c 4096 | gpg --symmetric --armor > ${keysafe}
-  readlink -f $keysafe
-fi
-
-encfs-create.sh $encname1 $encname2 $keysafe
+encfs-mnt.sh  $encname1 $encname2 $2 $3

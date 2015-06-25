@@ -1,5 +1,7 @@
 #!/bin/bash
 # W.-Marcel Richter (wmrichter@gmail.com)
+# older version,
+# use encfs-mnt.sh -u
 
 ft=$(mount | grep  " $1 " |  awk '{print $1}')
 

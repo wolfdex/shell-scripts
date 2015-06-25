@@ -1,5 +1,9 @@
 #!/bin/bash
 # W.-Marcel Richter (wmrichter@gmail.com)
+#
+# older version,
+# use encfs-mnt.sh
+
 
 ts=$(date +%s)
 

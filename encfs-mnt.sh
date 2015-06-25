@@ -15,17 +15,18 @@ ksigns="[:print:]"
 
 # help
 fkthelp () {
-  echo "encfs-create.sh - by W.-M. Richter"
+  echo "encfs-mnt.sh - by W.-M. Richter"
   echo ""
-  echo "encfs-create.sh -h		this help"
-  echo "encfs-create.sh CRYPTED_FOLDER"
-  echo "encfs-create.sh CRYPTED_FOLDER -kf KEYFILE"
+  echo "encfs-mnt.sh -h		this help"
+  echo "encfs-mnt.sh CRYPTED_FOLDER"
+  echo "encfs-mnt.sh CRYPTED_FOLDER -kf KEYFILE"
   #echo "encfs-create.sh CRYPTED_FOLDER -kf KEYFILE -ck"
-  echo "encfs-create.sh CRYPTED_FOLDER TARGET_FOLDER"
-  echo "encfs-create.sh CRYPTED_FOLDER TARGET_FOLDER KEYFILE"
-  echo "encfs-create.sh CRYPTED_FOLDER TARGET_FOLDER KEYFILE -ck"
+  echo "encfs-mnt.sh CRYPTED_FOLDER TARGET_FOLDER"
+  echo "encfs-mnt.sh CRYPTED_FOLDER TARGET_FOLDER KEYFILE"
+  echo "encfs-mnt.sh CRYPTED_FOLDER TARGET_FOLDER KEYFILE -ck"
   echo ""  
-  echo "encfs-create.sh -ck KEYFILE	create keyfile"	
+  echo "encfs-mnt.sh -u TARGET_FOLDER	unmount Folder"	
+  echo "encfs-mnt.sh -ck KEYFILE	create keyfile"	
   exit 1
 } 
 
@@ -56,6 +57,27 @@ if [ "$1" = "-ck" ]; then
     fktcreate_keyfile $keyfile
   exit 1
 fi
+
+
+
+# unmount
+
+if [ "$1" = "-u"  ];  then
+
+ft=$(mount | grep  " $1 " |  awk '{print $1}')
+
+if [ ! "$ft" = "encfs" ] ; then 
+ echo "encfs not found"
+ exit 0
+fi
+
+tres=$(fusermount -u $1 && rm  -r $1)
+
+
+exit $tres
+fi
+
+
 
 if [ -z $1 ];  then
   encname1="$(pwd)/.crypt${ts}"

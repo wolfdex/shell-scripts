@@ -35,7 +35,7 @@ case "$1" in
       ;;
 
    *) echo "default" 
-      xrandr -o right
+      xrandr -o normal 
       ;;
    
 esac

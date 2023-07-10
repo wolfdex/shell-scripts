@@ -30,4 +30,6 @@ yay -S  aj-snapshot
 yay -S  jack_mixer
 yay -S quodlibet
 
+#jacksupport (by garuda)
 
+yay -S a2jmidid  celt  dbus-c++  jack_capture  jack_utils libconfig  libffado  libxml++  zita-ajbridge zita-alsa-pcmi  zita-resampler  jack-support

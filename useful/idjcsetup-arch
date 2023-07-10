@@ -1,0 +1,33 @@
+#!/bin/bash
+sudo pacman -S yay
+yay -S pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber
+
+sudo systemctl --user enable --now pipewire.socket
+sudo systemctl --user enable --now pipewire-pulse.socket
+sudo systemctl --user enable --now wireplumber.service
+
+sudo pacman -S python
+sudo pacman -S python-mutagen
+sudo pacman -S python-gobject
+sudo pacman -S glib2
+
+yay -S libshout-idjc
+yay -S libsndfile
+yay -S libsamplerate
+yay -S twolame
+yay -S lame
+yay -S ffmpeg
+yay -S libvorbis lib32-libvorbis
+yay -S flac
+
+yay -S speex
+yay -S opus
+
+#cp -r /usr/share/pipewire/ ~/.config/
+
+yay -S qpwgraph
+yay -S  aj-snapshot
+yay -S  jack_mixer
+yay -S quodlibet
+
+

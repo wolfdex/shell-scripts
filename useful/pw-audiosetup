@@ -1,0 +1,47 @@
+#!/bin/bash
+## pactl load-module module-null-sink media.class=Audio/Source/Virtual sink_name=my-virtualmic channel_map=front-left,front-right
+
+## default audio-mm setup
+
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkOneStereo channel_map=stereo
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkTWOStereo channel_map=stereo
+
+pactl load-module module-null-sink media.class=Audio/Source/Virtual sink_name=SinkVirtS21  channel_map=surround-21
+
+pactl load-module module-null-sink media.class=Audio/Source/Virtual sink_name=SinkVirtS51  channel_map=surround-51
+
+pactl load-module module-null-sink media.class=Audio/Source/Virtual sink_name=SinkVirtS71  channel_map=surround-71
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMicIn channel_map=stereo
+
+## conference-setup
+
+## streaming-radio-setup
+
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMonitor channel_map=stereo
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMicRadioIn channel_map=stereo
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMicStreamIn channel_map=stereo
+
+## homerecording-creatvivity
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkInstrumentStereoIn channel_map=stereo
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkInstrumentMonoIn01 channel_map=mono
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkInstrumentMonoIn02 channel_map=mono
+
+
+## set defaults
+
+pactl set-default-sink SinkOneStereo
+
+## print info
+
+pw-link -o
+
+pactl info

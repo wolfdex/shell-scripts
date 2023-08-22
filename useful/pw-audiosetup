@@ -40,8 +40,11 @@ pw-link SinkMainStereo:monitor_FL SinkMonitor:playback_FL
 pw-link SinkMainStereo:monitor_FR SinkMonitor:playback_FR
 
 
-pw-link SinkMainStereo:capture_FL  SinkVirtS21:input_FL
-pw-link SinkMainStereo:capture_FR  SinkVirtS21:input_FR
+#pw-link SinkMainStereo:capture_FL  SinkVirtS21:input_FL
+#pw-link SinkMainStereo:capture_FR  SinkVirtS21:input_FR
+pw-link SinkMainStereo:monitor_FL SinkVirtS21:input_FL
+pw-link SinkMainStereo:monitor_FR SinkVirtS21:input_FR
+
 
 pw-link SinkVirtS21:capture_FL SinkVirtS51:input_FL
 pw-link SinkVirtS21:capture_FR SinkVirtS51:input_FR

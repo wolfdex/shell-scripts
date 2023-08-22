@@ -5,13 +5,7 @@
 systemctl --user restart pipewire-pulse.service
 
 
-## pactl load-module module-null-sink media.class=Audio/Source/Virtual sink_name=my-virtualmic channel_map=front-left,front-right
-
-## default audio-mm setup
-
-
-##pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkOneStereo channel_map=stereo
-##pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkTWOStereo channel_map=stereo
+## default Main audio-mm setup
 
 pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMainStereo channel_map=stereo
 pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMainMonitor channel_map=stereo
@@ -92,12 +86,18 @@ pw-link SinkSubMonitor:monitor_FL alsa_output.pci-0000_00_1f.3.analog-stereo:pla
 pw-link SinkSubMonitor:monitor_FR alsa_output.pci-0000_00_1f.3.analog-stereo:playback_FR
 
 
-# USB-MIC
+## USB-MIC 
+
+# Endgame_Gear_Xstrm
 
 pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FL SinkRadioMic00:playback_FL
 pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FR SinkRadioMic00:playback_FR
 pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FL SinkHWMonitor:playback_FL
 pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FR SinkHWMonitor:playback_FR
+
+
+# Maranz
+
 
 
 # audio-interface Roland Rubix24, (2xIn, 4xOut, MIDI )
@@ -120,6 +120,6 @@ pw-link -o
 
 pw-link -i
 
-pwlink -l
+pw-link -l
 
 pactl info

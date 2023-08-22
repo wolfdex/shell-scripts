@@ -1,12 +1,34 @@
 #!/bin/bash
+
+## reset audio
+
+systemctl --user restart pipewire-pulse.service
+
+
 ## pactl load-module module-null-sink media.class=Audio/Source/Virtual sink_name=my-virtualmic channel_map=front-left,front-right
 
 ## default audio-mm setup
 
 
-pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkOneStereo channel_map=stereo
+##pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkOneStereo channel_map=stereo
+##pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkTWOStereo channel_map=stereo
 
-pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkTWOStereo channel_map=stereo
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMainStereo channel_map=stereo
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMainMonitor channel_map=stereo
+pw-link  SinkMainStereo:monitor_FL SinkMainMonitor:playback_FL
+pw-link  SinkMainStereo:monitor_FR SinkMainMonitor:playback_FR
+
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkSubStereo channel_map=stereo
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkSubMonitor channel_map=stereo
+pw-link  SinkSubStereo:monitor_FL SinkSubMonitor:playback_FL
+pw-link  SinkSubStereo:monitor_FR SinkSubMonitor:playback_FR
+
+pw-link SinkMainStereo:monitor_FL SinkSubStereo:playback_FL
+pw-link SinkMainStereo:monitor_FR SinkSubStereo:playback_FR
+
+pactl set-default-sink SinkMainStereo
+
 
 pactl load-module module-null-sink media.class=Audio/Source/Virtual sink_name=SinkVirtS21  channel_map=surround-21
 
@@ -14,59 +36,12 @@ pactl load-module module-null-sink media.class=Audio/Source/Virtual sink_name=Si
 
 pactl load-module module-null-sink media.class=Audio/Source/Virtual sink_name=SinkVirtS71  channel_map=surround-71
 
-pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMicIn channel_map=stereo
-
-## conference-setup
-
-## streaming-radio-setup
+pw-link SinkMainStereo:monitor_FL SinkMonitor:playback_FL
+pw-link SinkMainStereo:monitor_FR SinkMonitor:playback_FR
 
 
-pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMonitor channel_map=stereo
-
-pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMicRadioIn channel_map=stereo
-
-pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMicStreamIn channel_map=stereo
-
-## homerecording-creatvivity
-
-pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkInstrumentStereoIn channel_map=stereo
-
-pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkInstrumentMonoIn01 channel_map=mono
-
-pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkInstrumentMonoIn02 channel_map=mono
-
-
-
-## pw-link 
-
-# internal Audio, 3.5 Port
-
-#pw-link alsa_output.pci-0000_00_1f.3.analog-stereo:monitor_FL SinkMonitor:playback_FL
-#pw-link alsa_output.pci-0000_00_1f.3.analog-stereo:monitor_FR SinkMonitor:playback_FR
-
-pw-link alsa_input.pci-0000_00_1f.3.analog-stereo:capture_FL SinkMonitor:playback_FL
-pw-link alsa_input.pci-0000_00_1f.3.analog-stereo:capture_FR SinkMonitor:playback_FR
-
-# USB-MIC
-
-pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FL SinkMicRadioIn:playback_FL
-pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FR SinkMicRadioIn:playback_FR
-pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FL SinkMonitor:playback_FL
-pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FR SinkMonitor:playback_FR
-
-# audio-interface Roland Rubix24
-
-
-## set defaults
-
-pw-link SinkOneStereo:monitor_FL SinkTWOStereo:playback_FL
-pw-link SinkOneStereo:monitor_FR SinkTWOStereo:playback_FR
-
-pw-link SinkOneStereo:monitor_FL SinkMonitor:playback_FL
-pw-link SinkOneStereo:monitor_FR SinkMonitor:playback_FR
-
-pw-link SinkOneStereo:monitor_FL SinkVirtS21:input_FL
-pw-link SinkOneStereo:monitor_FR SinkVirtS21:input_FR
+pw-link SinkMainStereo:capture_FL  SinkVirtS21:input_FL
+pw-link SinkMainStereo:capture_FR  SinkVirtS21:input_FR
 
 pw-link SinkVirtS21:capture_FL SinkVirtS51:input_FL
 pw-link SinkVirtS21:capture_FR SinkVirtS51:input_FR
@@ -76,12 +51,65 @@ pw-link SinkVirtS21:capture_FR SinkVirtS71:input_FR
 
 
 
-# Virt-SinkTwo to BT
-pw-link SinkTWOStereo:monitor_FL luez_output.0A_11_75_33_B1_21.1:playback_FL
-pw-link SinkTWOStereo:monitor_FR luez_output.0A_11_75_33_B1_21.1:playback_FR
+##pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkMicIn channel_map=stereo
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkHWMonitor channel_map=stereo
 
 
-pactl set-default-sink SinkOneStereo
+
+## conference-setup
+
+## streaming-radio-setup
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkRadioMic00 channel_map=stereo
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkRadioMicMonitor channel_map=stereo
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkRadioMonitor channel_map=stereo
+
+
+
+## homerecording-creatvivity
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkInstrumentStereo00 channel_map=stereo
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkInstrumentMono00 channel_map=mono
+
+pactl load-module module-null-sink media.class=Audio/Sink sink_name=SinkInstrumentMono01 channel_map=mono
+
+
+## pw-link 
+
+# internal Audio, 3.5 Port
+
+pw-link alsa_input.pci-0000_00_1f.3.analog-stereo:capture_FL SinkHWMonitor:playback_FL
+pw-link alsa_input.pci-0000_00_1f.3.analog-stereo:capture_FR SinkHWMonitor:playback_FR
+
+pw-link SinkSubMonitor:monitor_FL alsa_output.pci-0000_00_1f.3.analog-stereo:playback_FL
+pw-link SinkSubMonitor:monitor_FR alsa_output.pci-0000_00_1f.3.analog-stereo:playback_FR
+
+
+# USB-MIC
+
+pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FL SinkRadioMic00:playback_FL
+pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FR SinkRadioMic00:playback_FR
+pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FL SinkHWMonitor:playback_FL
+pw-link alsa_input.usb-C-Media_Electronics_Inc._Endgame_Gear_Xstrm-00.analog-stereo:capture_FR SinkHWMonitor:playback_FR
+
+
+# audio-interface Roland Rubix24, (2xIn, 4xOut, MIDI )
+
+## set defaults
+
+pactl set-default-sink SinkMainStereo
+
+
+# Virt-SinkSub to BT
+
+pw-link SinkSubStereo:monitor_FL bluez_output.0A_11_75_33_B1_21.1:playback_FL
+pw-link SinkSubStereo:monitor_FR bluez_output.0A_11_75_33_B1_21.1:playback_FR
+
+
 
 ## print info
 
